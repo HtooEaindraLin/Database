@@ -29,6 +29,15 @@ inner join Department as d on d.ID=e.DeptID
 inner join Job_Position as jp on jp.ID=e.PostID
 
 --Trip Assign
+select e.ID as EmpID,t.TripName,t.FromDate,t.ToDate,t.Description,e.EmpName,d.DeptName,d.ID,e.FingerID,t.IsTrip,e.SubsidiaryID,
+e.BranchID,b.Region as AccessPoint,c.ID
+from Trip_Assign as t 
+inner join Employee as e on e.ID=t.EmpID
+inner join Department as d on d.ID=e.DeptID
+inner join Branch as b on b.ID=e.BranchID
+inner join Corporate as c on c.ID=b.Corporate_id
+inner join Region as r on r.ID=b.Region
+
 
 
 
