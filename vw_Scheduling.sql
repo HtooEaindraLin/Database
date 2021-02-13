@@ -115,6 +115,25 @@ inner join Department as d on d.ID=a.DeptID
 WHERE (a.Late <> '00:00:00') AND (CONVERT(DATE, GETDATE()) = CONVERT(DATE, a.ShiftDateIn)) AND (CAST(GETDATE() AS time) > CAST(sms.OnDutyTime AS time)) OR
                          (a.Late <> '00:00:00') AND (CONVERT(DATE, GETDATE()) > CONVERT(DATE, a.ShiftDateIn))
 
+--vw_resign_employee_list
+select e.ID,e.EmpName,e.PostID,e.DeptID,d.DeptName,jp.PostName,r.ApprovedBy,r.ResignDate,
+MONTH(r.resignDate) as Month,Year(r.resignDate) as Year,r.OrderNo,ap.EmpName,ap.FingerID,r.Description,
+r.IsGiveGratuity,r.IsDeleted,r.IsPaid,e.SubsidiaryID,e.BranchID,b.Region as 'AccessPoint',r.IsApproved,
+(case when jp.isSkillLabour=1 then 'Skill' else 'Unskill' end) as Labour,c.id as CorporateID
+from Employee_Resign as r
+inner join Employee as e on e.ID=r.EmpID
+inner join Department as d on d.ID=e.DeptID
+inner join Job_Position as jp on jp.ID=e.PostID
+inner join Employee as ap on ap.ID=r.ApprovedBy
+inner join Branch as b on b.ID=e.BranchID
+inner join Branch as s on s.ID=e.SubsidiaryID
+inner join Corporate as c on c.ID=s.Corporate_id
+where r.IsDeleted=0 and r.IsResign=1
+
+
+
+
+
 
 
 
